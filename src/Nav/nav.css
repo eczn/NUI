@@ -1,0 +1,44 @@
+/*nav.css*/
+.n-nav-container {
+	position: fixed; 
+	top: 0; 
+	left: 100%; 
+	width: 100%; 
+	height: 100%; 
+	opacity: 0; 
+	animation-name: nav-push; 
+	animation-duration: 1s; 
+	animation-delay: .2s; 
+	animation-fill-mode: both; 
+	animation-timing-function: cubic-bezier(0.24, 0.96, 0, 1); 
+	background-color: #FFF; 
+}
+
+@keyframes nav-push {
+	from {
+		left: 100%; 
+		opacity: .6; 
+	} to {
+		left: 0%; 
+		opacity: 1; 
+	}
+}
+
+.n-nav-pop {
+	animation-name: nav-pop; 
+	animation-duration: 1s; 
+	animation-delay: .2s; 
+	animation-fill-mode: both; 
+	animation-timing-function: cubic-bezier(0.1, 0.99, 0.2, 0.99); 
+}
+
+@keyframes nav-pop {
+	from {
+		left: 0%; 
+		opacity: 1; 
+	} to {
+		left: 100%; 
+		opacity: .6; 
+	}
+}
+

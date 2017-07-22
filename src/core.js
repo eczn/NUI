@@ -8,23 +8,39 @@ import {Toast} from './Popout/toast.js';
 
 
 var test = new Component({
-	name: 'test', 
-	tpl: `<h1 class="${css.test}"> hello, world </h1>`, 
+	name: 'nav-push-pop-test', 
+	tpl: `
+		<div>
+			<h1 class="${css.test}">
+				hello, world
+			</h1>
+			<button @click="toPush"> Push ! </button>
+			<button @click="toPop"> Pop ! </button>
+		</div>
+	`, 
 	style: '', 
-	onInit: () => { console.log('oninit') },
-	onDestroy: () => {console.log('delete')}
+	onInit(){
+		// console.log(this.root); 
+	},
+	onDestroy(){
+		console.log('delete')
+	},
+	toPush(e){
+		Nav.push(test); 
+	}, 
+	toPop(e){
+		Nav.pop(); 
+	}
 }); 
 
 // var toast = new Toast({
 // 	position: 'top', // top | bottom | middle
 // 	content: 'this is content',
 // });
+Nav.push(test); 
 
 window.Toast = Toast;
 window.test = test; 
 window.Nav = Nav; 
 window.Component = Component; 
- 
-console.log(Nav);
-
 
