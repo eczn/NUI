@@ -51,7 +51,15 @@ var Nav = {
 		if (navStack.length < 2) return; 
 
 		// Remove 
-		navStack.slice(1).forEach(compo => compo.remove()); 
+		navStack.slice(1).forEach(toDelete => {
+			toDelete.setAttribute(
+				'class',
+				navStyle['n-nav-container'] + ' ' + navStyle['n-nav-pop']
+			);
+			setTimeout(() => {
+				toDelete.remove()
+			}, 1200)
+		}); 
 
 		// popToRoot And Render 
 		navStack = [
