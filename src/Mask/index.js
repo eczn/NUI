@@ -1,7 +1,10 @@
 // index.js
-// import style from './mask.css';
+import style from './mask.css';
 
-var Mask = {}; 
-// console.log(style.test);
+class Mask {
+    constructor(){
+        
+    }
+}
 
-export { Mask }
+export default Mask; 
