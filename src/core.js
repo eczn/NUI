@@ -46,7 +46,7 @@ var toast = new Toast({
 
 Nav.push(test); 
 
-window.Toast = Toast;
+window.toast = toast;
 window.test = test; 
 window.Nav = Nav; 
 window.Component = Component; 

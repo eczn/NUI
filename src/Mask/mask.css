@@ -9,15 +9,15 @@
 }
 
 .create {
-    visibility: none;
+    visibility: visible!important;
 }
 
 .remove {
-    visibility: hidden
+    visibility: hidden!important;
 }
 
 .mask {
-    visibility: hidden; 
+    /* visibility: hidden;  */
     z-index: 1000;
     position: fixed;
     top: 0;
