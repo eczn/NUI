@@ -1,10 +1,13 @@
 // index.js
 import style from './mask.css';
 
-class Mask {
-    constructor(){
-        
+var Mask = {
+    push(compon) {
+        var componDom = compon.render();
+        var $mask = document.getElementById("n-mask");
+        $mask.appendChild(componDom);
     }
+
 }
 
-export default Mask; 
+export { Mask }; 
