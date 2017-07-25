@@ -21,6 +21,7 @@ var test = new Component({
 			</h1>
 			<button @click="toPush"> Push ! </button>
 			<button @click="toPop"> Pop ! </button>
+			<button @click="as"> ActionSheet ! </button>
 		</div>
 	`,
 	style: '',
@@ -40,6 +41,9 @@ var test = new Component({
 	data: {
 		wow: '数据绑定',
 		VERSION: '0.0.1'
+	},
+	as(e){
+		ActionSheet.create();
 	}
 });
 var toast = new Toast({
@@ -60,6 +64,7 @@ window.Toast = Toast;
 window.test = test;
 window.Nav = Nav;
 window.Component = Component;
+window.ActionSheet = ActionSheet;
 
 var N = {
 	Alert,
