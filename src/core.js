@@ -16,6 +16,7 @@ var test = new Component({
 			</h1>
 			<button @click="toPush"> Push ! </button>
 			<button @click="toPop"> Pop ! </button>
+			<button @click="as"> ActionSheet ! </button>
 		</div>
 	`,
 	style: '',
@@ -30,6 +31,9 @@ var test = new Component({
 	},
 	toPop(e){
 		Nav.pop();
+	},
+	as(e){
+		ActionSheet.create();
 	}
 });
 
@@ -38,4 +42,5 @@ Nav.push(test);
 window.test = test;
 window.Nav = Nav;
 window.Component = Component;
+window.ActionSheet = ActionSheet;
 
