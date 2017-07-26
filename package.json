@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack",
-    "open": "webpack-dev-server --progress"
+    "build": "webpack --env=prod",
+    "serve": "webpack-dev-server --env=dev --open --progress"
   },
   "author": "nw",
   "license": "MIT",
