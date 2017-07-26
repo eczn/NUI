@@ -11,21 +11,16 @@ class Toast extends ToastPro {
     constructor(config) {
         super();
         this.toast = new Component(config);
-        // let {position = "top", content =  "默认内容", tpl = "<h1>FUCK</h1>"} = config;
-        // this.toast.name = ""
-        // this.toast.tpl = `
-        // <div>
-        //     <p class="${position}">
-        //         ${content}
-        //     </p>
-        // </div>`;
-
         
         console.log(this.toast);
     }
 
     present() {
         Mask.push(this.toast);
+
+        setTimeout(() => {
+            Mask.delete();
+        }, 1000)
     }
 
     sayName() {

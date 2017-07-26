@@ -1,13 +1,13 @@
 // webpack.config.js
 const path = require('path');
 const webpack = require('webpack')
-const pkg = require('./package.json');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-module.exports = {
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const prodConfig = {
     entry: __dirname +  "/src/core.js",
     output: {
-        path: path.join(__dirname, '/build'),
-        filename: 'nui.js'
+        path: path.join(__dirname, 'dist'),
+        filename: 'nui.js',
     },
 
     module: {
@@ -25,16 +25,37 @@ module.exports = {
     },
 
     plugins: [
-        new HtmlWebpackPlugin({
+       new HtmlWebpackPlugin({
             template: __dirname + "/src/index.html"
         }),
-        new webpack.HotModuleReplacementPlugin()
-    ],
+    ]
+    
+}
 
-    devServer: {
-        contentBase: path.join(__dirname, "src"),
-        historyApiFallback: true,
-        inline: true
+var devConfig = () =>{
+    const config = {
+        devtool: 'eval-source-map',
+        devServer: {
+            contentBase: path.join(__dirname, 'src'),
+            historyApiFallback: true
+        },
+        plugins: [
+            new webpack.HotModuleReplacementPlugin(),
+        ],
     }
+
+    return Object.assign( {}, prodConfig, config, { plugins: prodConfig.plugins.concat(config.plugins) } )
+}
+
+
+module.exports = function(env) {
+    console.log("env is: ", env);
+
+    if(env === "dev") {
+        return devConfig();
+    }
+
+    return prodConfig;
+
     
 }
