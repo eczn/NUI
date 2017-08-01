@@ -64,6 +64,27 @@ function dataBinding(root, config){
 	})
 }
 
+var inputBinding = (attr, config) => {
+	if (attr.node.tagName === 'INPUT' || attr.node.tagName === 'TEXTAREA'){
+		let preVal = attr.node.value; 
+		attr.node.addEventListener('keyup', function(e){
+			config.data[attr.value] = attr.node.value; 
+		}); 
+
+		Object.defineProperty(config.data, attr.value, {
+			get(){
+				return preVal; 
+			},
+			set(newVal){
+				preVal = newVal; 
+				attr.node.value = preVal; 
+				return newVal; 
+			}
+		})
+
+	}
+}
+
 // 递归遍历树 
 ComponentProto.tplParser = function(root, config){
 	// 遍历子树 
@@ -84,7 +105,8 @@ ComponentProto.tplParser = function(root, config){
 				return {
 					name: attr.name.slice(1), 
 					value: attr.value.trim(), 
-					bind: true
+					bind: true, 
+					node: child
 				}
 			} else {
 				return false; 
@@ -97,18 +119,8 @@ ComponentProto.tplParser = function(root, config){
 				var preVal = config.data[attr.value]; 
 				child.value = preVal; 
 
-
-				Object.defineProperty(config.data, attr.value, {
-					get(){
-						return preVal; 
-					},
-					set(newVal){
-						preVal = newVal; 
-						child.value = preVal; 
-						return newVal; 
-					}
-				})
-
+				// 对 input 或 textarea 的绑定 
+				inputBinding(attr, config); 
 			}
 		}); 
 

@@ -24,7 +24,11 @@ var test = new Component({
 			<button @click="toPush"> Push ! </button>
 			<button @click="toPop"> Pop ! </button>
 
-			<input :bind="inp" />
+			<textarea :bind="t"></textarea>
+			<input :bind="inp" type="text" />
+	
+			<p> {{ t }} </p> 
+			<p> {{ inp }} </p>
 
 			<img src="{{ img }}"/>
 			<button @click="as"> ActionSheet ! </button>
@@ -44,11 +48,15 @@ var test = new Component({
 	toPop(e){
 		Nav.pop();
 	},
+	ttt(e){
+
+	},
 	data: {
 		wow: '数据绑定',
 		VERSION: '0.0.1', 
 		img: 'http://ogz5pg6y8.bkt.clouddn.com/vally/images/car-on-way-to-gdut.jpg',
-		inp: 'wow'
+		inp: 'wow', 
+		t: ''
 	},
 	hi: function(){
 		alert('hi'); 
