@@ -27,20 +27,23 @@ var replacer = function(match, p1, p2, p3, offset, string){
 	return this[p1.trim()]; 
 }
 
+var exp = /{{(.*?)}}/g
+
 function dataBinding(root, config){
-	// 筛选文本结点 
-	Array.from(root.childNodes).filter(e => e.nodeType === 3).forEach(text => {
-		var exp = /{{(.*?)}}/g
-		  , matches = text.wholeText.match(exp);
+	Array.from(root.childNodes).concat(Array.from(root.attributes)).filter(e => e.nodeType === 3 || e.nodeType === 2).forEach(node => {
+		if (node.nodeType === 3){
+			var matches = node.wholeText.match(exp);
+			var tpl = node.wholeText
+			
+			, render = () => node.data = tpl.replace(exp, replacer.bind(config.data)); 
+		} else {
+			var matches = node.value.match(exp); 
+			var tpl = node.value; 
+			var render = () => node.value = tpl.replace(exp, replacer.bind(config.data)); 
+		}
 		
-		// 未有数据绑定 则返回
 		if (!matches) return; 
 
-		//  否则 
-		var tpl = text.wholeText
-		//  数据渲染 
-		  , render = () => text.data = tpl.replace(exp, replacer.bind(config.data)); 
-		
 		//  首次渲染
 		render();
 		
@@ -74,8 +77,14 @@ ComponentProto.tplParser = function(root, config){
 			if (attr.name.startsWith('@')){
 				return {
 					name: attr.name.slice(1), 
-					value: attr.value, 
+					value: attr.value.trim(), 
 					eventBind: true
+				}
+			} else if (attr.name.startsWith(':')) {
+				return {
+					name: attr.name.slice(1), 
+					value: attr.value.trim(), 
+					bind: true
 				}
 			} else {
 				return false; 
@@ -83,6 +92,23 @@ ComponentProto.tplParser = function(root, config){
 		}).filter(e => e).forEach(attr => {
 			if (attr.eventBind && (attr.value in config)){
 				child.addEventListener(attr.name, config[attr.value]); 
+			} else if (attr.bind){
+				// 数据绑定 
+				var preVal = config.data[attr.value]; 
+				child.value = preVal; 
+
+
+				Object.defineProperty(config.data, attr.value, {
+					get(){
+						return preVal; 
+					},
+					set(newVal){
+						preVal = newVal; 
+						child.value = preVal; 
+						return newVal; 
+					}
+				})
+
 			}
 		}); 
 

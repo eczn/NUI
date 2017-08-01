@@ -1,7 +1,7 @@
 // core.js
 import { Popout } from './Popout'; 
-import Nav from './Nav'; 
-import Component from './Component'; 
+import { Nav } from './Nav'; 
+import { Component } from './Component'; 
 import Mask from './Mask';
 import css from './Mask/mask.css';
 import {Toast} from './Popout/toast.js';
@@ -14,11 +14,16 @@ var test = new Component({
 	tpl: `
 		<div class="${css.test}">
 			<header>Hello</header>
-			<h1>
-				{{ wow }} ({{ VERSION }})
+			<h1 @click="hi">
+				{{ wow }} {{ VERSION }}
 			</h1>
+
 			<button @click="toPush"> Push ! </button>
 			<button @click="toPop"> Pop ! </button>
+
+			<input :bind="inp" />
+
+			<img src="{{ img }}"/>
 		</div>
 	`, 
 	style: '', 
@@ -37,7 +42,12 @@ var test = new Component({
 	}, 
 	data: {
 		wow: '数据绑定',
-		VERSION: '0.0.1'
+		VERSION: '0.0.1', 
+		img: 'http://ogz5pg6y8.bkt.clouddn.com/vally/images/car-on-way-to-gdut.jpg',
+		inp: 'wow'
+	},
+	hi: function(){
+		alert('hi'); 
 	}
 }); 
 
