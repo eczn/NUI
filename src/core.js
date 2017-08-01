@@ -1,16 +1,19 @@
 // core.js
-import { Popout } from './Popout'; 
-import { Nav } from './Nav'; 
-import { Component } from './Component'; 
-import Mask from './Mask';
+import { Popout } from './Popout';
+import { Nav } from './Nav';
+import { Component } from './Component';
+import { Mask } from './Mask';
+
 import css from './Mask/mask.css';
 import {Toast} from './Popout/toast.js';
 
 
-import { Alert } from './Alert'; 
+import { Alert } from './Alert';
+
+import { ActionSheet } from './ActionSheet';
 
 var test = new Component({
-	name: 'nav-push-pop-test', 
+	name: 'nav-push-pop-test',
 	tpl: `
 		<div class="${css.test}">
 			<header>Hello</header>
@@ -24,22 +27,23 @@ var test = new Component({
 			<input :bind="inp" />
 
 			<img src="{{ img }}"/>
+			<button @click="as"> ActionSheet ! </button>
 		</div>
-	`, 
-	style: '', 
+	`,
+	style: '',
 	onInit(){
-		// console.log(this.root); 
+		// console.log(this.root);
 	},
 	onDestroy(){
 		console.log('delete')
 	},
 	toPush(e){
-		console.log('toPush'); 
-		Nav.push(test); 
-	}, 
+		console.log('toPush');
+		Nav.push(test);
+	},
 	toPop(e){
-		Nav.pop(); 
-	}, 
+		Nav.pop();
+	},
 	data: {
 		wow: '数据绑定',
 		VERSION: '0.0.1', 
@@ -48,25 +52,37 @@ var test = new Component({
 	},
 	hi: function(){
 		alert('hi'); 
-	}
-}); 
+		VERSION: '0.0.1'
+	},
+	as(e){
+		ActionSheet.create();	}
+});
 
-// var toast = new Toast({
-// 	position: 'top', // top | bottom | middle
-// 	content: 'this is content',
-// });
-Nav.push(test); 
+var toast = new Toast({
+	name: 'wow',
+	tpl:`<div>fuck</div>`,
+	style: '',
+	onInit(){
+		// console.log(this.root);
+	},
+	onDestroy(){
+		console.log('delete')
+	},
+})
+
+Nav.push(test);
 
 window.Toast = Toast;
-window.test = test; 
-window.Nav = Nav; 
-window.Component = Component; 
+window.test = test;
+window.Nav = Nav;
+window.Component = Component;
+window.ActionSheet = ActionSheet;
 
 var N = {
-	Alert, 
+	Alert,
 	Component
 }
 
-window.N = N; 
+window.N = N;
 
-export default N; 
+export default N;

@@ -11,12 +11,23 @@
             margin: 0; 
             padding: 0; 
         }
+        #n-mask {
+            visibility: hidden;  
+            z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,.5);
+        }
     </style>
 </head>
 <body>
     <app class="n-container">
-        <pop id="n-p-out"></pop>
-        <mask id="n-mask"></mask>
+        <mask id="n-mask">
+            <pop id="n-pout"></pop>
+        </mask>
         <nav id="n-nav"></nav>
     </app>
 </body>
