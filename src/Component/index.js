@@ -1,8 +1,22 @@
 // index.js
 var ComponentProto = {}; 
 
+var remain = keys => o => (
+	keys.reduce((acc, key) => {
+		acc[key] = o[key]; 
+		return acc; 
+	}, {})
+); 
+
+var NUI_BASE_PROP = [ 'dataModel', 'onInit', 'onDestroy', 'methods', 'style', 'tpl', 'name' ]; 
+var remain4NUI = remain(NUI_BASE_PROP); 
+
 ComponentProto.render = function(){
-	var config = this.config; 
+	// 
+	var config = remain4NUI(this.config); 
+
+	// Render 的时候才决定
+	config.data = config.dataModel ? config.dataModel() : {}; 
 
 	var $component = document.createElement(config.name);
 	$component.setAttribute('id', config.componentId); 
@@ -15,11 +29,9 @@ ComponentProto.render = function(){
 		</style>
 	`; 
 
-	window.h = $component; 
+	
 	this.tplParser($component, config); 
 	
-	this.root = $component; 
-
 	return $component; 
 }
 
@@ -34,7 +46,6 @@ function dataBinding(root, config){
 		if (node.nodeType === 3){
 			var matches = node.wholeText.match(exp);
 			var tpl = node.wholeText
-			
 			, render = () => node.data = tpl.replace(exp, replacer.bind(config.data)); 
 		} else {
 			var matches = node.value.match(exp); 
@@ -87,8 +98,6 @@ var inputBinding = (attr, config) => {
 
 // 递归遍历树 
 ComponentProto.tplParser = function(root, config){
-	// 遍历子树 
-
 	// 数据绑定 
 	dataBinding(root, config);
 
@@ -112,8 +121,11 @@ ComponentProto.tplParser = function(root, config){
 				return false; 
 			}
 		}).filter(e => e).forEach(attr => {
-			if (attr.eventBind && (attr.value in config)){
-				child.addEventListener(attr.name, config[attr.value]); 
+			if (attr.eventBind && (attr.value in config.methods)){
+				child.addEventListener(
+					attr.name,
+					config.methods[attr.value]
+				);
 			} else if (attr.bind){
 				// 数据绑定 
 				var preVal = config.data[attr.value]; 
@@ -152,6 +164,8 @@ var idGenerator = function(){
 function Component(config){
 	// save config 
 	this.config = config; 
+
+	// config.data = config.dataModel ? config.dataModel() : {}; 
 	
 	config.componentId = idGenerator(); 
 

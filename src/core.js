@@ -41,29 +41,34 @@ var test = new Component({
 	onDestroy(){
 		console.log('delete')
 	},
-	toPush(e){
-		console.log('toPush');
-		Nav.push(test);
+	dataModel(){
+		return {
+			wow: '数据绑定',
+			VERSION: '0.0.1', 
+			img: 'http://ogz5pg6y8.bkt.clouddn.com/vally/images/car-on-way-to-gdut.jpg',
+			inp: 'wow', 
+			t: ''
+		}
 	},
-	toPop(e){
-		Nav.pop();
-	},
-	ttt(e){
+	methods: {
+		toPush(e){
+			console.log('toPush');
+			Nav.push(test);
+		},
+		toPop(e){
+			Nav.pop();
+		},
+		ttt(e){
 
-	},
-	data: {
-		wow: '数据绑定',
-		VERSION: '0.0.1', 
-		img: 'http://ogz5pg6y8.bkt.clouddn.com/vally/images/car-on-way-to-gdut.jpg',
-		inp: 'wow', 
-		t: ''
-	},
-	hi: function(){
-		alert('hi'); 
-		VERSION: '0.0.1'
-	},
-	as(e){
-		ActionSheet.create();	}
+		},
+		hi: function(){
+			alert('hi'); 
+			VERSION: '0.0.1'
+		},
+		as(e){
+			ActionSheet.create();
+		}
+	}
 });
 
 var toast = new Toast({
